@@ -30,14 +30,42 @@ fi
 if [ -f "${HERMES_WEB_INDEX}" ]; then
   "${HERMES_PYTHON}" - <<'PY'
 from pathlib import Path
+import re
 
 index_path = Path('/opt/hermes/hermes_cli/web_dist/index.html')
 marker = 'ha-hermes-terminal-link'
-button = '<a class="ha-hermes-terminal-link" href="terminal/" style="position:fixed;right:20px;bottom:20px;z-index:2147483647;padding:10px 14px;border-radius:999px;background:#111827;color:#ffffff;text-decoration:none;font:600 14px/1.2 system-ui,-apple-system,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)">Open Terminal</a>'
 html = index_path.read_text(encoding='utf-8')
+script = '''<script id="ha-hermes-terminal-link">(function(){
+  function ensureTerminalLink(){
+    if (document.getElementById('ha-hermes-terminal-link-anchor')) return;
+    var anchor = document.createElement('a');
+    anchor.id = 'ha-hermes-terminal-link-anchor';
+    anchor.href = 'terminal/';
+    anchor.textContent = 'Open Terminal';
+    anchor.style.position = 'fixed';
+    anchor.style.right = '20px';
+    anchor.style.bottom = '20px';
+    anchor.style.zIndex = '2147483647';
+    anchor.style.padding = '10px 14px';
+    anchor.style.borderRadius = '999px';
+    anchor.style.background = '#111827';
+    anchor.style.color = '#ffffff';
+    anchor.style.textDecoration = 'none';
+    anchor.style.font = '600 14px/1.2 system-ui,-apple-system,sans-serif';
+    anchor.style.boxShadow = '0 8px 24px rgba(0,0,0,.25)';
+    document.body.appendChild(anchor);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureTerminalLink, { once: true });
+  } else {
+    ensureTerminalLink();
+  }
+  window.addEventListener('load', ensureTerminalLink, { once: true });
+})();</script>'''
+html = re.sub(r'<a[^>]*>Open Terminal</a>', '', html)
+html = re.sub(r'<script id="ha-hermes-terminal-link">.*?</script>', '', html, flags=re.S)
 if marker not in html and '</body>' in html:
-    html = html.replace('</body>', f'{button}</body>', 1)
-    html = html.replace('class="ha-hermes-terminal-link"', f'class="{marker}"', 1)
+    html = html.replace('</body>', f'{script}</body>', 1)
     index_path.write_text(html, encoding='utf-8')
 PY
 fi

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026.5.7-10
+
+- Make the startup HTML patch for the `Open Terminal` button idempotent so old injected markup is cleaned up automatically
+
+## 2026.5.7-9
+
+- Render the dashboard `Open Terminal` button via startup-injected JavaScript so it appears reliably with the SPA
+
 ## 2026.5.7-8
 
 - Add the `Open Terminal` button by patching the upstream dashboard HTML at startup
