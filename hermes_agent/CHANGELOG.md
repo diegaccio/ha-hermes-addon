@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-6
+
+- Redirect `/terminal` to `/terminal/` so Home Assistant ingress reaches the web terminal reliably
+
 ## 2026.5.7-5
 
 - Add optional browser terminal access through ingress at `/terminal/`
