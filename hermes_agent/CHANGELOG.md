@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026.5.7-8
+
+- Add the `Open Terminal` button by patching the upstream dashboard HTML at startup
+
+## 2026.5.7-7
+
+- Add an `Open Terminal` button to the dashboard when the terminal route is enabled
+
 ## 2026.5.7-6
 
 - Redirect `/terminal` to `/terminal/` so Home Assistant ingress reaches the web terminal reliably

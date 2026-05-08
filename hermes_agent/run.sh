@@ -6,6 +6,7 @@ HERMES_DATA_DIR="/data"
 WORKSPACE_DIR="${HERMES_DATA_DIR}/workspace"
 INTERNAL_API_KEY_FILE="${HERMES_DATA_DIR}/.ha_api_server_key"
 HERMES_PYTHON="/opt/hermes/.venv/bin/python"
+HERMES_WEB_INDEX="/opt/hermes/hermes_cli/web_dist/index.html"
 
 if [ ! -f "${OPTIONS_FILE}" ]; then
   echo "Missing ${OPTIONS_FILE}"
@@ -23,6 +24,21 @@ import secrets
 path = Path('/data/.ha_api_server_key')
 path.write_text(secrets.token_hex(32) + '\n', encoding='utf-8')
 path.chmod(0o600)
+PY
+fi
+
+if [ -f "${HERMES_WEB_INDEX}" ]; then
+  "${HERMES_PYTHON}" - <<'PY'
+from pathlib import Path
+
+index_path = Path('/opt/hermes/hermes_cli/web_dist/index.html')
+marker = 'ha-hermes-terminal-link'
+button = '<a class="ha-hermes-terminal-link" href="terminal/" style="position:fixed;right:20px;bottom:20px;z-index:2147483647;padding:10px 14px;border-radius:999px;background:#111827;color:#ffffff;text-decoration:none;font:600 14px/1.2 system-ui,-apple-system,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)">Open Terminal</a>'
+html = index_path.read_text(encoding='utf-8')
+if marker not in html and '</body>' in html:
+    html = html.replace('</body>', f'{button}</body>', 1)
+    html = html.replace('class="ha-hermes-terminal-link"', f'class="{marker}"', 1)
+    index_path.write_text(html, encoding='utf-8')
 PY
 fi
 

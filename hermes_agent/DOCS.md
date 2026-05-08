@@ -84,6 +84,8 @@ When enabled, the terminal is available behind Home Assistant ingress at:
 
 The shell runs as the non-root `hermes` user inside the add-on container.
 
+The dashboard also shows an `Open Terminal` button in the lower-right corner.
+
 ### `gateway_timeout`
 
 Sets `agent.gateway_timeout` in Hermes `config.yaml`.
