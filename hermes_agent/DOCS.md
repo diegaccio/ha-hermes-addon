@@ -73,6 +73,17 @@ Enable Hermes' in-browser chat tab inside the dashboard.
 
 Default: `false`
 
+### `enable_terminal`
+
+Enable a browser terminal for the add-on shell.
+
+Default: `true`
+
+When enabled, the terminal is available behind Home Assistant ingress at:
+- `<addon ingress url>/terminal/`
+
+The shell runs as the non-root `hermes` user inside the add-on container.
+
 ### `gateway_timeout`
 
 Sets `agent.gateway_timeout` in Hermes `config.yaml`.

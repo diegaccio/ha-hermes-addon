@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-5
+
+- Add optional browser terminal access through ingress at `/terminal/`
+
 ## 2026.5.7-4
 
 - Fix Home Assistant ingress `Invalid Host header` errors by forcing a loopback Host header through the internal nginx proxy

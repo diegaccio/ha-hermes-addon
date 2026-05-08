@@ -26,6 +26,9 @@ configuration:
   enable_dashboard_tui:
     name: Enable dashboard chat tab
     description: Enables Hermes dashboard TUI support.
+  enable_terminal:
+    name: Enable web terminal
+    description: Exposes a shell terminal through ingress at the terminal path.
   gateway_timeout:
     name: Gateway timeout
     description: Idle timeout in seconds for Hermes gateway runs. Set 0 to disable.

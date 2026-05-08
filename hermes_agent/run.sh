@@ -131,8 +131,19 @@ print('true' if options.get('enable_dashboard_tui') else 'false')
 PY
 )"
 
+ENABLE_TERMINAL="$("${HERMES_PYTHON}" - <<'PY'
+import json
+from pathlib import Path
+
+options = json.loads(Path('/data/options.json').read_text(encoding='utf-8'))
+print('true' if options.get('enable_terminal', True) else 'false')
+PY
+)"
+
 if [ "${ENABLE_DASHBOARD_TUI}" = "true" ]; then
   export HERMES_DASHBOARD_TUI=1
 fi
+
+export ENABLE_TERMINAL
 
 exec /opt/hermes/docker/entrypoint.sh /addon-run.sh
