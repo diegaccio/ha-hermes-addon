@@ -6,7 +6,6 @@ HERMES_DATA_DIR="/data"
 WORKSPACE_DIR="${HERMES_DATA_DIR}/workspace"
 INTERNAL_API_KEY_FILE="${HERMES_DATA_DIR}/.ha_api_server_key"
 HERMES_PYTHON="/opt/hermes/.venv/bin/python"
-HERMES_WEB_INDEX="/opt/hermes/hermes_cli/web_dist/index.html"
 
 if [ ! -f "${OPTIONS_FILE}" ]; then
   echo "Missing ${OPTIONS_FILE}"
@@ -24,49 +23,6 @@ import secrets
 path = Path('/data/.ha_api_server_key')
 path.write_text(secrets.token_hex(32) + '\n', encoding='utf-8')
 path.chmod(0o600)
-PY
-fi
-
-if [ -f "${HERMES_WEB_INDEX}" ]; then
-  "${HERMES_PYTHON}" - <<'PY'
-from pathlib import Path
-import re
-
-index_path = Path('/opt/hermes/hermes_cli/web_dist/index.html')
-marker = 'ha-hermes-terminal-link'
-html = index_path.read_text(encoding='utf-8')
-script = '''<script id="ha-hermes-terminal-link">(function(){
-  function ensureTerminalLink(){
-    if (document.getElementById('ha-hermes-terminal-link-anchor')) return;
-    var anchor = document.createElement('a');
-    anchor.id = 'ha-hermes-terminal-link-anchor';
-    anchor.href = 'terminal/';
-    anchor.textContent = 'Open Terminal';
-    anchor.style.position = 'fixed';
-    anchor.style.right = '20px';
-    anchor.style.bottom = '20px';
-    anchor.style.zIndex = '2147483647';
-    anchor.style.padding = '10px 14px';
-    anchor.style.borderRadius = '999px';
-    anchor.style.background = '#111827';
-    anchor.style.color = '#ffffff';
-    anchor.style.textDecoration = 'none';
-    anchor.style.font = '600 14px/1.2 system-ui,-apple-system,sans-serif';
-    anchor.style.boxShadow = '0 8px 24px rgba(0,0,0,.25)';
-    document.body.appendChild(anchor);
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', ensureTerminalLink, { once: true });
-  } else {
-    ensureTerminalLink();
-  }
-  window.addEventListener('load', ensureTerminalLink, { once: true });
-})();</script>'''
-html = re.sub(r'<a[^>]*>Open Terminal</a>', '', html)
-html = re.sub(r'<script id="ha-hermes-terminal-link">.*?</script>', '', html, flags=re.S)
-if marker not in html and '</body>' in html:
-    html = html.replace('</body>', f'{script}</body>', 1)
-    index_path.write_text(html, encoding='utf-8')
 PY
 fi
 

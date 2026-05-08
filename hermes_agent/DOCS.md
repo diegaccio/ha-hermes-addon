@@ -4,8 +4,10 @@
 
 This add-on runs [Hermes Agent](https://github.com/NousResearch/hermes-agent) inside Home Assistant using the official upstream Docker image.
 
-The first version is intentionally small:
-- Home Assistant ingress opens the Hermes dashboard
+The ingress entry page provides:
+- a custom landing page
+- an embedded terminal in the lower section
+- a button that opens the full Hermes dashboard
 - Hermes state is stored in the add-on private `/data` directory
 - the Hermes gateway API stays internal to the container
 - nginx terminates the internal ingress connection on `9119` and forwards to the Hermes dashboard on `127.0.0.1:9120`
@@ -84,8 +86,6 @@ When enabled, the terminal is available behind Home Assistant ingress at:
 
 The shell runs as the non-root `hermes` user inside the add-on container.
 
-The dashboard also shows an `Open Terminal` button in the lower-right corner.
-
 ### `gateway_timeout`
 
 Sets `agent.gateway_timeout` in Hermes `config.yaml`.
@@ -96,7 +96,8 @@ Set `0` to disable idle timeout.
 
 - This add-on pins Hermes to `v2026.5.7`.
 - Supported Home Assistant architectures are `amd64` and `aarch64`.
-- The dashboard is enabled automatically for ingress.
+- The ingress root page is a custom launcher with an embedded terminal.
+- The full Hermes dashboard is exposed under `/dashboard/` behind ingress.
 - A small internal nginx proxy translates Home Assistant's `X-Ingress-Path` header to the `X-Forwarded-Prefix` header expected by the Hermes dashboard SPA.
 - The internal Hermes API server is enabled on loopback so the dashboard can talk to the gateway.
 

@@ -1,8 +1,12 @@
 # Changelog
 
+## 2026.5.7-11
+
+- Keep the custom ingress launcher page as the add-on root and move the full Hermes dashboard to `/dashboard/`
+
 ## 2026.5.7-10
 
-- Make the startup HTML patch for the `Open Terminal` button idempotent so old injected markup is cleaned up automatically
+- Replace the root ingress view with a custom launcher page containing an embedded terminal and a button to open the full Hermes dashboard
 
 ## 2026.5.7-9
 

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hermes Agent</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b1220;
+        --panel: #111827;
+        --panel-2: #1f2937;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #14b8a6;
+        --accent-2: #0f766e;
+        --border: #243244;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+        color: var(--text);
+      }
+
+      .wrap {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .card {
+        background: rgba(17, 24, 39, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        line-height: 1.1;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        border: 1px solid transparent;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #051414;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--text);
+        border-color: var(--border);
+      }
+
+      .stats {
+        display: grid;
+        gap: 10px;
+      }
+
+      .stat {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(31, 41, 55, 0.75);
+        border: 1px solid #2c3b50;
+      }
+
+      .stat strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .terminal-card {
+        padding: 14px;
+      }
+
+      .terminal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .terminal-frame {
+        width: 100%;
+        min-height: 72vh;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: #000;
+      }
+
+      .hint {
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .terminal-frame {
+          min-height: 62vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="hero">
+        <div class="card">
+          <h1>Hermes Agent</h1>
+          <p>
+            Use the embedded terminal below for direct shell access, or open the full Hermes
+            dashboard for sessions, models, logs, skills, and configuration.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="dashboard/">Open Dashboard</a>
+            <a class="btn btn-secondary" href="terminal/" target="_blank" rel="noopener noreferrer">Open Terminal Only</a>
+          </div>
+        </div>
+        <div class="card stats">
+          <div class="stat">
+            <strong>Dashboard</strong>
+            <span>Full Hermes web UI under <code>/dashboard/</code></span>
+          </div>
+          <div class="stat">
+            <strong>Terminal</strong>
+            <span>Shell runs as the non-root <code>hermes</code> user</span>
+          </div>
+          <div class="stat">
+            <strong>Persistence</strong>
+            <span>Hermes state is stored in the add-on private <code>/data</code> directory</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card terminal-card">
+        <div class="terminal-header">
+          <div>
+            <strong>Embedded Terminal</strong>
+            <p class="hint">If the embedded view has issues, use <code>Open Terminal Only</code>.</p>
+          </div>
+        </div>
+        <iframe class="terminal-frame" src="terminal/" title="Hermes Agent Terminal"></iframe>
+      </section>
+    </div>
+  </body>
+</html>

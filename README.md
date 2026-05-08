@@ -35,15 +35,19 @@ Status:
    - the matching API key field for your provider
 3. Click `Save`.
 4. Start the add-on.
-5. Open `Show in sidebar` or the add-on page to access the Hermes dashboard through Home Assistant ingress.
+5. Open `Show in sidebar` or the add-on page to access the custom ingress launcher.
+
+## Ingress layout
+
+- The add-on root ingress page is a custom launcher.
+- It includes an embedded terminal in the lower section.
+- It also includes a button to open the full Hermes dashboard.
 
 ## Terminal access
 
-- The add-on can expose a browser terminal through Home Assistant ingress.
 - Default: `enable_terminal: true`
-- You can open it in two ways:
-  - click the `Open Terminal` button in the dashboard
-  - open the add-on ingress URL and append `/terminal/`
+- Direct terminal route: append `/terminal/` to the add-on ingress URL
+- Full Hermes dashboard route: append `/dashboard/` to the add-on ingress URL
 
 ## Notes
 
@@ -51,6 +55,7 @@ Status:
 - Hermes state is stored in the add-on private `/data` directory
 - The dashboard is exposed through Home Assistant ingress on port `9119`
 - The web terminal is proxied through ingress at `/terminal/`
+- The full Hermes dashboard is proxied through ingress at `/dashboard/`
 - The internal Hermes API stays bound to loopback inside the container
 
 ## Add-on docs
