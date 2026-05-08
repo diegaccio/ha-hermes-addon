@@ -38,6 +38,5 @@
 - There is no verified CI workflow in this repo yet; do not assume lint/test automation exists.
 
 ## Current known gaps
-- `icon.png` and `logo.png` are still missing from `hermes_agent/`; add them if you need a complete Home Assistant add-on package.
 - Real ingress behavior still needs validation in a live Home Assistant environment; if dashboard ingress fails, the likely follow-up is a small proxy layer rather than a redesign of the add-on structure.
 - Terminal access is provided through `ttyd` on internal port `7681`, proxied at the ingress subpath `/terminal/` when `enable_terminal` is true.

@@ -1,5 +1,7 @@
 # Hermes Agent Home Assistant Add-on
 
+![Hermes Agent Home Assistant Add-on](hermes_agent/logo.png)
+
 Home Assistant add-on repository for running Hermes Agent inside Home Assistant.
 
 GitHub repository:
@@ -9,7 +11,7 @@ Current add-on:
 - `hermes_agent`: minimal ingress-first wrapper around the official `nousresearch/hermes-agent:v2026.5.7` image
 
 Status:
-- scaffolded for local/Home Assistant builds
+- current add-on version: `2026.5.7-8`
 - pinned to Hermes `v2026.5.7`
 - targets `amd64` and `aarch64`
 
@@ -35,11 +37,20 @@ Status:
 4. Start the add-on.
 5. Open `Show in sidebar` or the add-on page to access the Hermes dashboard through Home Assistant ingress.
 
+## Terminal access
+
+- The add-on can expose a browser terminal through Home Assistant ingress.
+- Default: `enable_terminal: true`
+- You can open it in two ways:
+  - click the `Open Terminal` button in the dashboard
+  - open the add-on ingress URL and append `/terminal/`
+
 ## Notes
 
 - Supported architectures: `amd64`, `aarch64`
 - Hermes state is stored in the add-on private `/data` directory
 - The dashboard is exposed through Home Assistant ingress on port `9119`
+- The web terminal is proxied through ingress at `/terminal/`
 - The internal Hermes API stays bound to loopback inside the container
 
 ## Add-on docs

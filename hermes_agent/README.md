@@ -1,9 +1,12 @@
 # Hermes Agent Add-on
 
-Home Assistant add-on that wraps the official Hermes Agent Docker image.
+![Hermes Agent Home Assistant Add-on](logo.png)
+
+Run Hermes Agent inside Home Assistant with a native add-on wrapper around the official upstream image.
 
 Highlights:
-- pinned to `nousresearch/hermes-agent:v2026.5.7`
 - Home Assistant ingress for the Hermes dashboard
-- persistent Hermes home in the add-on private `/data` directory
-- minimal first-release configuration surface
+- browser terminal access through the `Open Terminal` button or `/terminal/`
+- persistent Hermes state stored in the add-on private `/data` directory
+- support for `amd64` and `aarch64`
+- pinned to `nousresearch/hermes-agent:v2026.5.7`
