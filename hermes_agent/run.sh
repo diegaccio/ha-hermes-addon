@@ -5,6 +5,7 @@ OPTIONS_FILE="/data/options.json"
 HERMES_DATA_DIR="/data"
 WORKSPACE_DIR="${HERMES_DATA_DIR}/workspace"
 INTERNAL_API_KEY_FILE="${HERMES_DATA_DIR}/.ha_api_server_key"
+NGINX_PID=""
 
 if [ ! -f "${OPTIONS_FILE}" ]; then
   echo "Missing ${OPTIONS_FILE}"
@@ -12,6 +13,7 @@ if [ ! -f "${OPTIONS_FILE}" ]; then
 fi
 
 mkdir -p "${WORKSPACE_DIR}"
+mkdir -p "${HERMES_DATA_DIR}/nginx/body" "${HERMES_DATA_DIR}/nginx/proxy" "${HERMES_DATA_DIR}/nginx/fastcgi" "${HERMES_DATA_DIR}/nginx/uwsgi" "${HERMES_DATA_DIR}/nginx/scgi"
 
 if [ ! -f "${INTERNAL_API_KEY_FILE}" ]; then
   python3 - <<'PY'
@@ -114,8 +116,8 @@ PY
 )"
 export TZ
 export HERMES_DASHBOARD=1
-export HERMES_DASHBOARD_HOST=0.0.0.0
-export HERMES_DASHBOARD_PORT=9119
+export HERMES_DASHBOARD_HOST=127.0.0.1
+export HERMES_DASHBOARD_PORT=9120
 export API_SERVER_ENABLED=true
 export API_SERVER_HOST=127.0.0.1
 export API_SERVER_KEY="$(tr -d '\r\n' < "${INTERNAL_API_KEY_FILE}")"
@@ -133,5 +135,18 @@ if [ "${ENABLE_DASHBOARD_TUI}" = "true" ]; then
   export HERMES_DASHBOARD_TUI=1
 fi
 
-echo "Starting Hermes gateway with dashboard on ingress port 9119"
+shutdown() {
+  if [ -n "${NGINX_PID}" ] && kill -0 "${NGINX_PID}" >/dev/null 2>&1; then
+    kill -TERM "${NGINX_PID}" >/dev/null 2>&1 || true
+    wait "${NGINX_PID}" 2>/dev/null || true
+  fi
+}
+
+trap shutdown INT TERM
+
+echo "Starting ingress nginx on port 9119"
+nginx -g 'daemon off;' &
+NGINX_PID=$!
+
+echo "Starting Hermes gateway with dashboard on internal port 9120"
 exec /opt/hermes/docker/entrypoint.sh gateway run

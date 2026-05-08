@@ -8,6 +8,7 @@ The first version is intentionally small:
 - Home Assistant ingress opens the Hermes dashboard
 - Hermes state is stored in the add-on private `/data` directory
 - the Hermes gateway API stays internal to the container
+- nginx terminates the internal ingress connection on `9119` and forwards to the Hermes dashboard on `127.0.0.1:9120`
 
 ## Storage layout
 
@@ -82,6 +83,7 @@ Set `0` to disable idle timeout.
 - This add-on pins Hermes to `v2026.5.7`.
 - Supported Home Assistant architectures are `amd64` and `aarch64`.
 - The dashboard is enabled automatically for ingress.
+- A small internal nginx proxy translates Home Assistant's `X-Ingress-Path` header to the `X-Forwarded-Prefix` header expected by the Hermes dashboard SPA.
 - The internal Hermes API server is enabled on loopback so the dashboard can talk to the gateway.
 
 ## Custom endpoint examples

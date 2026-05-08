@@ -17,7 +17,7 @@
 - `HERMES_HOME` is set to `/data`, so Hermes state is intentionally stored in the add-on private persistent directory, not `/opt/data`.
 - `run.sh` generates/updates `/data/config.yaml` and a managed block inside `/data/.env` from `/data/options.json` on every startup.
 - `run.sh` must hand off to `/opt/hermes/docker/entrypoint.sh gateway run`; calling `hermes gateway run` directly bypasses upstream dashboard startup/bootstrap behavior.
-- The dashboard is always enabled for Home Assistant ingress on port `9119`.
+- The dashboard is always enabled for Home Assistant ingress, but Hermes itself listens on `127.0.0.1:9120`; nginx owns ingress port `9119` and forwards `X-Ingress-Path` as `X-Forwarded-Prefix`.
 - The internal Hermes API server is intentionally enabled on `127.0.0.1` only so the dashboard can talk to the gateway without exposing the API externally.
 
 ## Editing rules for this repo
