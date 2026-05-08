@@ -5,7 +5,7 @@ OPTIONS_FILE="/data/options.json"
 HERMES_DATA_DIR="/data"
 WORKSPACE_DIR="${HERMES_DATA_DIR}/workspace"
 INTERNAL_API_KEY_FILE="${HERMES_DATA_DIR}/.ha_api_server_key"
-NGINX_PID=""
+HERMES_PYTHON="/opt/hermes/.venv/bin/python"
 
 if [ ! -f "${OPTIONS_FILE}" ]; then
   echo "Missing ${OPTIONS_FILE}"
@@ -16,7 +16,7 @@ mkdir -p "${WORKSPACE_DIR}"
 mkdir -p "${HERMES_DATA_DIR}/nginx/body" "${HERMES_DATA_DIR}/nginx/proxy" "${HERMES_DATA_DIR}/nginx/fastcgi" "${HERMES_DATA_DIR}/nginx/uwsgi" "${HERMES_DATA_DIR}/nginx/scgi"
 
 if [ ! -f "${INTERNAL_API_KEY_FILE}" ]; then
-  python3 - <<'PY'
+  "${HERMES_PYTHON}" - <<'PY'
 from pathlib import Path
 import secrets
 
@@ -26,7 +26,7 @@ path.chmod(0o600)
 PY
 fi
 
-python3 - <<'PY'
+"${HERMES_PYTHON}" - <<'PY'
 from pathlib import Path
 import json
 import re
@@ -106,7 +106,7 @@ parts.append('\n'.join(managed_lines))
 env_path.write_text('\n\n'.join(parts).rstrip() + '\n', encoding='utf-8')
 PY
 
-TZ="$(python3 - <<'PY'
+TZ="$("${HERMES_PYTHON}" - <<'PY'
 import json
 from pathlib import Path
 
@@ -122,7 +122,7 @@ export API_SERVER_ENABLED=true
 export API_SERVER_HOST=127.0.0.1
 export API_SERVER_KEY="$(tr -d '\r\n' < "${INTERNAL_API_KEY_FILE}")"
 
-ENABLE_DASHBOARD_TUI="$(python3 - <<'PY'
+ENABLE_DASHBOARD_TUI="$("${HERMES_PYTHON}" - <<'PY'
 import json
 from pathlib import Path
 
@@ -135,18 +135,4 @@ if [ "${ENABLE_DASHBOARD_TUI}" = "true" ]; then
   export HERMES_DASHBOARD_TUI=1
 fi
 
-shutdown() {
-  if [ -n "${NGINX_PID}" ] && kill -0 "${NGINX_PID}" >/dev/null 2>&1; then
-    kill -TERM "${NGINX_PID}" >/dev/null 2>&1 || true
-    wait "${NGINX_PID}" 2>/dev/null || true
-  fi
-}
-
-trap shutdown INT TERM
-
-echo "Starting ingress nginx on port 9119"
-nginx -g 'daemon off;' &
-NGINX_PID=$!
-
-echo "Starting Hermes gateway with dashboard on internal port 9120"
-exec /opt/hermes/docker/entrypoint.sh gateway run
+exec /opt/hermes/docker/entrypoint.sh /addon-run.sh

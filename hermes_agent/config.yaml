@@ -1,5 +1,5 @@
 name: Hermes Agent
-version: "2026.5.7-2"
+version: "2026.5.7-3"
 slug: hermes_agent
 description: Run Hermes Agent as a Home Assistant add-on using the official Hermes image.
 url: https://github.com/NousResearch/hermes-agent

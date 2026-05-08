@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026.5.7-3
+
+- Fix Home Assistant startup by reading root-owned `/data/options.json` before Hermes drops privileges
+- Split startup into a root wrapper (`run.sh`) and non-root runtime handoff (`addon-run.sh`)
+
 ## 2026.5.7-2
 
 - Fix Home Assistant ingress blank page by adding an internal nginx proxy

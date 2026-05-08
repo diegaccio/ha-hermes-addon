@@ -18,7 +18,8 @@ LABEL \
 ENV HERMES_HOME=/data
 
 COPY ingress.conf /etc/nginx/nginx.conf
+COPY addon-run.sh /addon-run.sh
 COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+RUN chmod a+x /run.sh /addon-run.sh
 
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]

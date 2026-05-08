@@ -9,6 +9,7 @@ The first version is intentionally small:
 - Hermes state is stored in the add-on private `/data` directory
 - the Hermes gateway API stays internal to the container
 - nginx terminates the internal ingress connection on `9119` and forwards to the Hermes dashboard on `127.0.0.1:9120`
+- the root startup wrapper reads Home Assistant's `/data/options.json` before Hermes drops to the non-root `hermes` user
 
 ## Storage layout
 

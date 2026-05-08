@@ -8,15 +8,16 @@
 ## Add-on entrypoints
 - Add-on metadata lives in `hermes_agent/config.yaml`.
 - Image build is `hermes_agent/Dockerfile`.
-- Runtime behavior is almost entirely in `hermes_agent/run.sh`.
+- Root startup wrapper is `hermes_agent/run.sh`; non-root runtime handoff is `hermes_agent/addon-run.sh`.
 - User-facing add-on docs are `hermes_agent/DOCS.md`; keep them aligned with `config.yaml` and `run.sh`.
 
 ## Runtime assumptions that matter
 - The add-on wraps the official upstream image `nousresearch/hermes-agent:v2026.5.7`; do not silently switch to `latest`.
 - Supported Home Assistant architectures are only `amd64` and `aarch64`.
 - `HERMES_HOME` is set to `/data`, so Hermes state is intentionally stored in the add-on private persistent directory, not `/opt/data`.
+- `run.sh` runs as the container entrypoint specifically so it can read Home Assistant's root-owned `/data/options.json` before the upstream Hermes entrypoint drops privileges.
 - `run.sh` generates/updates `/data/config.yaml` and a managed block inside `/data/.env` from `/data/options.json` on every startup.
-- `run.sh` must hand off to `/opt/hermes/docker/entrypoint.sh gateway run`; calling `hermes gateway run` directly bypasses upstream dashboard startup/bootstrap behavior.
+- `run.sh` must hand off to `/opt/hermes/docker/entrypoint.sh /addon-run.sh`; `addon-run.sh` then runs as the non-root `hermes` user after upstream bootstrap and dashboard startup.
 - The dashboard is always enabled for Home Assistant ingress, but Hermes itself listens on `127.0.0.1:9120`; nginx owns ingress port `9119` and forwards `X-Ingress-Path` as `X-Forwarded-Prefix`.
 - The internal Hermes API server is intentionally enabled on `127.0.0.1` only so the dashboard can talk to the gateway without exposing the API externally.
 
