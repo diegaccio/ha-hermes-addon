@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-12
+
+- Fix the `/dashboard/` ingress route by stripping the dashboard prefix before proxying to Hermes
+
 ## 2026.5.7-11
 
 - Keep the custom ingress launcher page as the add-on root and move the full Hermes dashboard to `/dashboard/`
