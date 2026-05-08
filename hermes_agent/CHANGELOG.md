@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-13
+
+- Fix `/dashboard/` asset and API routing by proxying Hermes dashboard subpaths explicitly
+
 ## 2026.5.7-12
 
 - Fix the `/dashboard/` ingress route by stripping the dashboard prefix before proxying to Hermes
