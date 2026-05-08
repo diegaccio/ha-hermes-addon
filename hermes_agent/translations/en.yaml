@@ -1,0 +1,31 @@
+configuration:
+  timezone:
+    name: Timezone
+    description: Timezone exported to the Hermes container.
+  model_provider:
+    name: Model provider
+    description: Hermes provider value written to config.yaml.
+  model_name:
+    name: Model name
+    description: Default model Hermes should use.
+  model_base_url:
+    name: Custom base URL
+    description: Optional OpenAI-compatible base URL for custom providers.
+  openrouter_api_key:
+    name: OpenRouter API key
+    description: Optional OpenRouter API key.
+  google_api_key:
+    name: Google API key
+    description: Optional Google AI Studio or Gemini API key.
+  anthropic_api_key:
+    name: Anthropic API key
+    description: Optional Anthropic API key.
+  openai_api_key:
+    name: OpenAI-compatible API key
+    description: Optional OpenAI API key, also used for custom endpoints.
+  enable_dashboard_tui:
+    name: Enable dashboard chat tab
+    description: Enables Hermes dashboard TUI support.
+  gateway_timeout:
+    name: Gateway timeout
+    description: Idle timeout in seconds for Hermes gateway runs. Set 0 to disable.
