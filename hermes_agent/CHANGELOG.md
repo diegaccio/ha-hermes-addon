@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-16
+
+- Rewrite dashboard HTML at the nginx layer so `/dashboard/` no longer depends on Hermes honoring the forwarded prefix header
+
 ## 2026.5.7-15
 
 - Publish the current custom ingress launcher and dashboard-route fixes as a new Home Assistant upgrade target
