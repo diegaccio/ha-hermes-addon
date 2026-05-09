@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-15
+
+- Publish the current custom ingress launcher and dashboard-route fixes as a new Home Assistant upgrade target
+
 ## 2026.5.7-14
 
 - Fix launcher links by using `./dashboard/` and `./terminal/` so Home Assistant does not resolve them against the outer `/app/...` route
