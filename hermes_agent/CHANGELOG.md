@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-20
+
+- Fix the full dashboard router basename by injecting the real ingress `/dashboard` prefix into the served HTML
+
 ## 2026.5.7-19
 
 - Simplify the `/dashboard/` base-path rewrite to a relative `./` value to avoid nginx parse issues while keeping dashboard requests under the ingress subpath
