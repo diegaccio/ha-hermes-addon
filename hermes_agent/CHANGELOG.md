@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.5.7-14
+
+- Fix launcher links by using `./dashboard/` and `./terminal/` so Home Assistant does not resolve them against the outer `/app/...` route
+
 ## 2026.5.7-13
 
 - Fix `/dashboard/` asset and API routing by proxying Hermes dashboard subpaths explicitly
