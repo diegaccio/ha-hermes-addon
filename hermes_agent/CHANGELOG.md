@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026.5.7-19
+
+- Simplify the `/dashboard/` base-path rewrite to a relative `./` value to avoid nginx parse issues while keeping dashboard requests under the ingress subpath
+
+## 2026.5.7-18
+
+- Fix the nginx `/dashboard/` HTML rewrite expression by removing the invalid `$` regex syntax from the injected JavaScript replacement
+
+## 2026.5.7-17
+
+- Fix the nginx `/dashboard/` HTML rewrite syntax and compute the dashboard base path at runtime instead of using invalid nginx variable interpolation
+
 ## 2026.5.7-16
 
 - Rewrite dashboard HTML at the nginx layer so `/dashboard/` no longer depends on Hermes honoring the forwarded prefix header
