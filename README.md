@@ -11,7 +11,7 @@ Current add-on:
 - `hermes_agent`: minimal ingress-first wrapper around the official `nousresearch/hermes-agent:v2026.5.7` image
 
 Status:
-- current add-on version: `2026.5.7-8`
+- current add-on version: `2026.5.7-20`
 - pinned to Hermes `v2026.5.7`
 - targets `amd64` and `aarch64`
 

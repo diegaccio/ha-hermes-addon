@@ -92,6 +92,16 @@ Sets `agent.gateway_timeout` in Hermes `config.yaml`.
 
 Set `0` to disable idle timeout.
 
+## Basic setup
+
+1. Open the add-on terminal from Home Assistant ingress.
+2. Pick a provider and model with `/opt/hermes/.venv/bin/hermes model`.
+3. Start the CLI with `/opt/hermes/.venv/bin/hermes` or `/opt/hermes/.venv/bin/hermes --tui`.
+4. To connect a messaging channel like Telegram, run `/opt/hermes/.venv/bin/hermes gateway setup` and follow the prompts.
+5. After setup, use `/opt/hermes/.venv/bin/hermes gateway status` to confirm the gateway is running.
+
+If you want the full upstream setup flow, install notes, and provider details, see the official Hermes quickstart: https://hermes-agent.nousresearch.com/docs/getting-started/quickstart.
+
 ## Notes
 
 - This add-on pins Hermes to `v2026.5.7`.
