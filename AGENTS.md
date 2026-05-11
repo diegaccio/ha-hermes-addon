@@ -32,9 +32,18 @@
 ## Verification
 - Shell syntax check:
   - `bash -n hermes_agent/run.sh`
+- Shell syntax check for the non-root runtime handoff:
+  - `bash -n hermes_agent/addon-run.sh`
 - Build the wrapper image from the add-on directory:
   - `docker build --platform linux/amd64 -t ha-hermes-addon-test:local .`
   - run from `hermes_agent/`
+- Local container smoke test from the repo root:
+  - create a temp data dir with an `options.json` matching the add-on schema
+  - run: `docker run -d --name ha-hermes-example --mount 'type=bind,src=<temp-dir>,dst=/data' -p 9119:9119 ha-hermes-addon-test:local`
+  - root launcher: `http://127.0.0.1:9119/`
+  - dashboard: `http://127.0.0.1:9119/dashboard/`
+  - terminal: `http://127.0.0.1:9119/terminal/`
+  - inspect logs with: `docker logs --tail 200 ha-hermes-example`
 - There is no verified CI workflow in this repo yet; do not assume lint/test automation exists.
 
 ## Current known gaps
